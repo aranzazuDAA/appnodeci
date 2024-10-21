@@ -33,7 +33,7 @@ jobs:
   
        runs-on: ubuntu-latest
        steps:
-         - uses: actions/checkout@v3
+         - uses: actions/checkout@v
          - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
            with:
              heroku_api_key: HEROKU_API_KEY
