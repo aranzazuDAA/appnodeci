@@ -22,10 +22,10 @@ jobs:
         
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }} 
+      - name: Use Node.js ${{ matrix.node_version}} 
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node_version }}
           cache: 'npm'
       - run: npm ci
       
@@ -39,4 +39,3 @@ jobs:
              heroku_api_key: ${{secrets.HEROKU_API_KEY}}
              heroku_app_name: "appnodedearan"
              heroku_email: "doradoaranzazu@gmail.com"
-
