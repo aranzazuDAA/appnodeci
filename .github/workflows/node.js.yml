@@ -11,31 +11,30 @@ on:
 
 jobs:
   build:
-
-  
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node_version: [20.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node_version}} 
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node_version }}
-          cache: 'npm'
-      - run: npm ci
-      
+          node-version: "20.x"
+      - name: Install dependencies
+        run: npm install
+      - name: Run test
+        run: npm test
+      - name: Check Job Status status and fail if they are red
+
+        if: env.WORKFLOW_CONCLUSION == 'failure'
+        run: exit 1
+        
   deploy:
-  
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v4
-         - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-           with:
+    needs: built
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
              heroku_api_key: ${{secrets.HEROKU_API_KEY}}
              heroku_app_name: "appnodedearan"
              heroku_email: "doradoaranzazu@gmail.com"
